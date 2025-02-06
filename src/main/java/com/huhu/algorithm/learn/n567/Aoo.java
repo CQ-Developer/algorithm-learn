@@ -14,15 +14,15 @@ class Aoo implements Solution {
         if (m < n) {
             return false;
         }
-        int[] target = new int['z' + 1], window = new int['z' + 1];
+        int[] target = new int[26], window = new int[26];
         for (int i = 0; i < n; i++) {
-            target[c1[i]]++;
-            window[c2[i]]++;
+            target[c1[i] - 'a']++;
+            window[c2[i] - 'a']++;
         }
         boolean res = Arrays.equals(target, window);
         for (int i = n; i < m && !res; i++) {
-            window[c2[i]]++;
-            window[c2[i - n]]--;
+            window[c2[i] - 'a']++;
+            window[c2[i - n] - 'a']--;
             res = Arrays.equals(target, window);
         }
         return res;
