@@ -19,16 +19,15 @@ class Coo implements Solution {
         for (int i = 0; i < n; i++) {
             cost[i] = Math.abs(s.charAt(i) - t.charAt(i));
         }
-        int l = 0, r = 0;
-        for (int sum = 0, i = 0; i < n; i++) {
-            sum += cost[i];
+        int l = 0;
+        for (int sum = 0, r = 0; r < n; r++) {
+            sum += cost[r];
             if (sum > maxCost) {
                 sum -= cost[l];
                 l++;
             }
-            r++;
         }
-        return r - l;
+        return n - l;
     }
 
 }
