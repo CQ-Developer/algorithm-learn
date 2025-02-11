@@ -11,8 +11,8 @@ class Boo implements Solution {
     @Override
     public int longestSemiRepetitiveSubstring(String s) {
         int n = s.length();
-        int l = 0, r = 0;
-        for (int cnt = 0, i = 0; i < n; i++) {
+        int l = 0;
+        for (int cnt = 0, r = 0; r < n; r++) {
             if (r > 0 && s.charAt(r) == s.charAt(r - 1)) {
                 cnt++;
             }
@@ -22,9 +22,8 @@ class Boo implements Solution {
                 }
                 l++;
             }
-            r++;
         }
-        return r - l;
+        return n - l;
     }
 
 }
