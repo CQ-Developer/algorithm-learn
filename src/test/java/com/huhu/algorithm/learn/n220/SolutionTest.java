@@ -2,11 +2,13 @@ package com.huhu.algorithm.learn.n220;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.ClassLoaderUtils;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 abstract class SolutionTest {
@@ -39,12 +41,12 @@ abstract class SolutionTest {
     }
 
     @Test
-    void testD() throws Exception {
-        var uri = Thread.currentThread()
-                .getContextClassLoader()
-                .getResource(SolutionTest.class.getPackageName().replaceAll("\\.", "/") + "/testD")
-                .toURI();
-        int[] nums = Files.lines(Path.of(uri))
+    void testD() {
+        var input = ClassLoaderUtils.getDefaultClassLoader()
+                .getResourceAsStream("com/huhu/algorithm/learn/n220/testD");
+        assertNotNull(input);
+        int[] nums = new BufferedReader(new InputStreamReader(input))
+                .lines()
                 .mapToInt(Integer::parseInt)
                 .toArray();
         assertFalse(solution.containsNearbyAlmostDuplicate(nums, 10000, 0));
