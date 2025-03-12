@@ -31,4 +31,9 @@ abstract class SolutionTest {
         assertEquals("", solution.shortestBeautifulSubstring("000", 1));
     }
 
+    @Test
+    void test_d() {
+        assertEquals("11101111001", solution.shortestBeautifulSubstring("1100001110111100100", 8));
+    }
+
 }
