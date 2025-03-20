@@ -15,8 +15,10 @@ repositories {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.12.0"))
+    testImplementation(platform("org.junit:junit-bom:5.12.1"))
+    testImplementation(platform("io.projectreactor:reactor-bom:2024.0.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+    testImplementation("io.projectreactor:reactor-core")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
