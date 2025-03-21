@@ -1,18 +1,18 @@
 package com.huhu.algorithm.learn.n713;
 
+import com.huhu.algorithm.common.BatchSpliterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.junit.platform.commons.util.ClassLoaderUtils;
-import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -50,20 +50,16 @@ abstract class SolutionTest {
         if (url == null) {
             return Stream.empty();
         }
-        return Flux.fromStream(Files.lines(Paths.get(url.toURI())))
-                .buffer(3)
-                .flatMap(SolutionTest::generate)
-                .toStream();
+        return StreamSupport.stream(
+                        new BatchSpliterator<>(3, Files.lines(Paths.get(url.toURI())).spliterator()), false)
+                .flatMap(SolutionTest::generate);
     }
 
-    static Mono<Arguments> generate(List<String> batch) {
-        if (batch.size() < 3) {
-            return Mono.empty();
-        }
+    static Stream<Arguments> generate(List<String> batch) {
         int[] nums = Stream.of(batch.get(0).split(",")).mapToInt(Integer::parseInt).toArray();
         int k = Integer.parseInt(batch.get(1));
         int res = Integer.parseInt(batch.get(2));
-        return Mono.just(Arguments.arguments(nums, k, res));
+        return Stream.of(Arguments.arguments(nums, k, res));
     }
 
 }
