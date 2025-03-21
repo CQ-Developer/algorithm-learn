@@ -1,11 +1,19 @@
 plugins {
     java
     jacoco
+    idea
 }
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+idea {
+    module {
+        isDownloadJavadoc = true
+        isDownloadSources = true
     }
 }
 
@@ -16,9 +24,7 @@ repositories {
 
 dependencies {
     testImplementation(platform("org.junit:junit-bom:5.12.1"))
-    testImplementation(platform("io.projectreactor:reactor-bom:2024.0.4"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.projectreactor:reactor-core")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
