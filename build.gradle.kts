@@ -23,19 +23,20 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
-tasks.test {
-    useJUnitPlatform()
-    finalizedBy(tasks.jacocoTestReport)
-    testLogging {
-        showStandardStreams = true
-        showStackTraces = true
-        exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
-        displayGranularity = 1
+tasks.withType<Test> {
+    finalizedBy(tasks.named("jacocoTestReport"))
+    useJUnitPlatform {
+        testLogging {
+            showStandardStreams = true
+            showStackTraces = true
+            exceptionFormat = org.gradle.api.tasks.testing.logging.TestExceptionFormat.FULL
+            displayGranularity = 1
+        }
     }
 }
 
-tasks.jacocoTestReport {
-    dependsOn(tasks.test)
+tasks.withType<JacocoReport> {
+    dependsOn(tasks.named("test"))
     reports {
         html.required = true
         xml.required = true
